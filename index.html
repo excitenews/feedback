@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Feedback</title>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <style>
+    body {
+      background-color: white;
+      font-family: sans-serif;
+      margin: 0;
+      padding: 2em;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h1 {
+      margin-bottom: 1em;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      max-width: 400px;
+    }
+    input, textarea, button {
+      margin: 0.5em 0;
+      padding: 1em;
+      font-size: 1em;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background: white;
+      color: black;
+    }
+    button {
+      cursor: pointer;
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Send Feedback</h1>
+  <form id="feedback-form">
+    <input type="text" id="title" placeholder="Feedback Title" required />
+    <textarea id="body" rows="6" placeholder="Feedback Body" required></textarea>
+    <button type="submit">Send</button>
+  </form>
+
+  <script>
+    // INIT EmailJS
+    (function() {
+      emailjs.init("LfqhZayimUh3Zl5-H");
+    })();
+
+    const form = document.getElementById("feedback-form");
+
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const title = document.getElementById("title").value;
+      const body = document.getElementById("body").value;
+
+      const templateParams = {
+        title: title,
+        body: body
+      };
+
+      emailjs.send("gmail", "template_skn2iuo", templateParams)
+        .then(function(response) {
+          alert("Feedback sent successfully!");
+          form.reset();
+        }, function(error) {
+          alert("Failed to send feedback. Try again later.");
+          console.error(error);
+        });
+    });
+  </script>
+
+</body>
+</html>
