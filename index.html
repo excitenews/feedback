@@ -48,9 +48,8 @@
   </form>
 
   <script>
-    // INIT EmailJS
     (function() {
-      emailjs.init("LfqhZayimUh3Zl5-H");
+      emailjs.init("LfqhZayimUh3Zl5-H"); // ✅ Your public key
     })();
 
     const form = document.getElementById("feedback-form");
@@ -61,19 +60,17 @@
       const title = document.getElementById("title").value;
       const body = document.getElementById("body").value;
 
-      const templateParams = {
+      emailjs.send("gmail", "template", {
         title: title,
         body: body
-      };
-
-      emailjs.send("gmail", "template", templateParams)
-        .then(function(response) {
-          alert("Feedback sent successfully!");
-          form.reset();
-        }, function(error) {
-          alert("Failed to send feedback. Try again later.");
-          console.error(error);
-        });
+      })
+      .then(function(response) {
+        alert("✅ Feedback sent!");
+        form.reset();
+      }, function(error) {
+        alert("❌ Failed to send feedback. Check the console.");
+        console.error("EmailJS error:", error);
+      });
     });
   </script>
 
